@@ -93,36 +93,14 @@ def main():
 
     sly.fs.silent_remove(local_path)
 
+    print("Done")
+    if sly.is_production():
+        task_id = sly.env.task_id()
+        api.task.set_output_project(task_id, project.id, project.name)
+
 
 if __name__ == "__main__":
     main()
 
-exit(0)
+
 # youtube-dl -f best -a videos_list.txt
-
-#     local_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
-#     api.file.download(team_id, remote_path, local_path)
-
-#     # result_name = (
-#     #     sly.fs.get_file_name(local_path)
-#     #     + "_youtube"
-#     #     + sly.fs.get_file_ext(local_path)
-#     # )
-#     local_result_path = os.path.join("src", result_name)
-#     paste_logo(local_path, local_result_path)
-
-#     remote_result_path = os.path.join(os.path.dirname(remote_path), result_name)
-#     if api.file.exists(team_id, remote_result_path) is True:
-#         api.file.remove(team_id, remote_result_path)
-#     api.file.upload(team_id, local_result_path, remote_result_path)
-
-#     sly.fs.silent_remove(local_path)
-#     sly.fs.silent_remove(local_result_path)
-
-#     progress.iter_done_report()
-
-# print("Done")
-# if sly.is_production():
-#     task_id = sly.env.task_id()
-#     file_info = api.file.get_info_by_path(team_id, remote_result_path)
-#     api.task.set_output_directory(task_id, file_info.id, remote_dir)
