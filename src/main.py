@@ -7,6 +7,10 @@ import supervisely as sly
 # load ENV variables for debug
 # has no effect in production
 load_dotenv("local.env")
+load_dotenv(os.path.expanduser("~/supervisely.env"))
+
+api = sly.Api.from_env()
+team_id = sly.env.team_id()
 
 progress_video = None
 
@@ -31,14 +35,14 @@ def download(url, output_dir="data/"):
 
 
 def main():
-    # api = sly.Api.from_env()
-    # team_id = sly.env.team_id()
+    remote_path = sly.env.file()
+    local_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
+    api.file.download(team_id, remote_path, local_path)
 
-    # download("https://www.youtube.com/watch?v=63Kc8Xq9H0U")
     data = []
-    with open("videos_list.txt", "r") as f:
+    with open(local_path, "r") as f:
         data = f.readlines()
-    print(data)
+    # print(data)
 
     progress = sly.Progress("Processing", len(data))
     for url in data:
