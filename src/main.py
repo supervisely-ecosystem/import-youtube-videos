@@ -22,7 +22,7 @@ def my_hook(d):
     #     print("Downloading video!")
     if d["status"] == "finished":
         print("Downloaded!")
-        downloaded_video = d['filename']
+        downloaded_video = d["filename"]
 
 
 def download(url, output_dir="data/"):
@@ -31,6 +31,8 @@ def download(url, output_dir="data/"):
         "continue": True,
         "outtmpl": output_dir + "%(uploader)s - %(title)s.%(ext)s",
         "progress_hooks": [my_hook],
+        # "no-progress": True,
+        "quiet": True,
     }
 
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -64,8 +66,16 @@ def main():
         normalized_url = url.strip()
         if normalized_url != "":
             try:
+                print(f"Start {normalized_url}")
                 download(normalized_url, output_dir)
-                # api.video.upload
+                api.video.upload_path(
+                    dataset_id=dataset.id,
+                    name=sly.fs.get_file_name_with_ext(downloaded_video),
+                    path=downloaded_video,
+                    item_progress=True,
+                )
+                sly.fs.silent_remove(downloaded_video)
+                print(f"Finish {normalized_url}")
             except Exception as e:
                 sly.logger.warn(repr(e))
         progress.iter_done_report()
