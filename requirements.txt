@@ -6,6 +6,6 @@ black==22.6.0
 
 python-dotenv
 
-supervisely
+supervisely==6.68.27
 
 youtube_dl

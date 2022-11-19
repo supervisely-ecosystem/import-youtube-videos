@@ -11,15 +11,18 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 api = sly.Api.from_env()
 team_id = sly.env.team_id()
+workspace_id = sly.env.workspace_id()
 
-progress_video = None
+downloaded_video = None
 
 
 def my_hook(d):
+    global downloaded_video
     # if d["status"] == "downloading":
     #     print("Downloading video!")
     if d["status"] == "finished":
         print("Downloaded!")
+        downloaded_video = d['filename']
 
 
 def download(url, output_dir="data/"):
@@ -39,20 +42,35 @@ def main():
     local_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
     api.file.download(team_id, remote_path, local_path)
 
+    project = api.project.get_or_create(
+        workspace_id=workspace_id,
+        name=sly.fs.get_file_name(remote_path),
+        type=sly.ProjectType.VIDEOS,
+    )
+
+    dataset = api.dataset.create(
+        project.id, "YouTube Videos", change_name_if_conflict=True
+    )
+
     data = []
     with open(local_path, "r") as f:
         data = f.readlines()
-    # print(data)
+
+    output_dir = "data/"
+    sly.fs.mkdir(output_dir)
 
     progress = sly.Progress("Processing", len(data))
     for url in data:
         normalized_url = url.strip()
         if normalized_url != "":
             try:
-                download(normalized_url)
+                download(normalized_url, output_dir)
+                # api.video.upload
             except Exception as e:
                 sly.logger.warn(repr(e))
         progress.iter_done_report()
+
+    sly.fs.silent_remove(local_path)
 
 
 if __name__ == "__main__":
