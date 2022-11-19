@@ -38,7 +38,7 @@ def download(url, output_dir="data/"):
         "format": "22",
         "continue": True,
         "outtmpl": output_dir + "%(uploader)s - %(title)s.%(ext)s",
-        "progress_hooks": [my_hook],
+        # "progress_hooks": [my_hook],
         # "no-progress": True,
         "quiet": True,
     }
