@@ -8,11 +8,11 @@
   <a href="#How-To-Run">How To Run</a> •
 </p>
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/insert-youtube-logo)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-video)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/insert-youtube-logo)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/insert-youtube-logo.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/insert-youtube-logo.png)](https://supervise.ly)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/import-youtube-video)
+[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/import-youtube-video.png)](https://supervise.ly)
+[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/import-youtube-video.png)](https://supervise.ly)
 
 </div>
 
@@ -25,7 +25,7 @@ This app comes in handy when you want to work with videos from YouTube in the pl
 # How to Run
 
 1. Go to Team Files
-<img src="https://user-images.githubusercontent.com/115161827/202218609-485003e6-e295-4d3b-9bd5-fa302e43eea2.png">
+<img src="https://user-images.githubusercontent.com/115161827/202218609-485003e6-e295-4d3b-9bd5-fa302e43eea2.png" >
 
 2. Upload *.txt* file that contains YouTube urls
 <img src="https://user-images.githubusercontent.com/115161827/203781775-acde06c1-4035-4d74-a9b8-0386c0850f8c.gif">
