@@ -35,7 +35,7 @@ def my_hook(d):
 
 def download(url, output_dir="data/"):
     ydl_opts = {
-        "format": "22",
+        "format": "best",
         "continue": True,
         "outtmpl": output_dir + "%(uploader)s - %(title)s.%(ext)s",
         "progress_hooks": [my_hook],
