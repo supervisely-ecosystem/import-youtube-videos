@@ -8,11 +8,11 @@
   <a href="#How-To-Run">How To Run</a> •
 </p>
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-video)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-videos)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/import-youtube-video)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/import-youtube-video.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/import-youtube-video.png)](https://supervise.ly)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/import-youtube-videos)
+[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/import-youtube-videos.png)](https://supervise.ly)
+[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/import-youtube-videos.png)](https://supervise.ly)
 
 </div>
 
