@@ -6,6 +6,7 @@
 <p align="center">
   <a href="#Overview">Overview</a> •
   <a href="#How-To-Run">How To Run</a> •
+  <a href="#Acknowledge">Acknowledge</a> •
 </p>
 
 [![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-videos)
@@ -27,9 +28,9 @@ This app comes in handy when you want to work with videos from YouTube in the pl
 0. Create *.txt* file with a list of YouTube links to videos that you would like to download like in the example shown below:
 
 ```md
-link1
-link2
-link3
+https://www.youtube.com/watch?v=nuYLz1CjRf0
+https://www.youtube.com/watch?v=psGDf2VrvK8
+https://www.youtube.com/watch?v=M69gZrLm9oc
 ```
 
 1. Go to Team Files
@@ -47,3 +48,7 @@ link3
 As a result of running this app, project with all of your uploaded videos will appear in your workspace.
 
 <img src="https://user-images.githubusercontent.com/115161827/203787133-aaea00c0-7246-40b9-9023-f4131e753e26.gif"  style='padding-top: 10px'>
+
+
+# Acknowledge
+This app is based on the great work `youtube-dl` ([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/open-mmlab/mmsegmentation?style=social)
