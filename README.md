@@ -51,4 +51,4 @@ As a result of running this app, project with all of your uploaded videos will a
 
 
 # Acknowledge
-This app is based on the great work `youtube-dl` ([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/open-mmlab/mmsegmentation?style=social)
+This app is based on the great work `youtube-dl` ([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/ytdl-org/youtube-dl?style=social)
