@@ -25,7 +25,7 @@ This app comes in handy when you want to work with videos from YouTube in the pl
 
 # How to Run
 
-0. Create *.txt* file with a list of YouTube links to videos that you would like to download like in the example shown below:
+0. Create *.txt* file with a list of YouTube links to videos that you would like to download, just like in the example shown below:
 
 ```md
 https://www.youtube.com/watch?v=nuYLz1CjRf0
