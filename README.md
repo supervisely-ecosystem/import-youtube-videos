@@ -24,6 +24,14 @@ This app comes in handy when you want to work with videos from YouTube in the pl
 
 # How to Run
 
+0. Create *.txt* file with a list of YouTube links to videos that you would like to download like in the example shown below:
+
+```md
+link1
+link2
+link3
+```
+
 1. Go to Team Files
 <img src="https://user-images.githubusercontent.com/115161827/202218609-485003e6-e295-4d3b-9bd5-fa302e43eea2.png" >
 
