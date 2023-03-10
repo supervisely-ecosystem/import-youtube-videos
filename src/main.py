@@ -1,11 +1,9 @@
 from __future__ import unicode_literals
 from dotenv import load_dotenv
 import os
-import yt-dlp
+from pytube import YouTube
 import supervisely as sly
 
-# load ENV variables for debug
-# has no effect in production
 if sly.is_development():
     load_dotenv("local.env")
     load_dotenv(os.path.expanduser("~/supervisely.env"))
@@ -17,41 +15,19 @@ workspace_id = sly.env.workspace_id()
 downloaded_video = None
 download_progress = None
 
-def my_hook(d):
-    global downloaded_video
-    global download_progress
-
-    if d["status"] == "downloading":
-        if download_progress is None:
-            download_progress = sly.Progress(
-                f"Downloading {d['filename']}", total_cnt=d["total_bytes"], is_size=True
-            )
-        download_progress.set_current_value(d["downloaded_bytes"], report=True)
-    if d["status"] == "finished":
-        print("Downloaded!")
-        downloaded_video = d["filename"]
-        download_progress.set_current_value(d["total_bytes"])
 
 def download(url, output_dir="data/"):
-    ydl_opts = {
-        "format": "best",
-        "continue": True,
-        "outtmpl": output_dir + "%(uploader)s - %(title)s.%(ext)s",
-        "progress_hooks": [my_hook],
-        # "no-progress": True,
-        "quiet": True,
-    }
-
-    with yt-dlp as ydl:
-        ydl.download([url])
+    yt = YouTube(str(url))
+    stream = yt.streams.get_highest_resolution()
+    stream.download(output_path="")
 
 
 def main():
     global download_progress
 
     remote_path = sly.env.file()
-    local_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
-    api.file.download(team_id, remote_path, local_path)
+    local_save_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
+    api.file.download(team_id, remote_path, local_save_path)
 
     project = api.project.get_or_create(
         workspace_id=workspace_id,
@@ -64,7 +40,8 @@ def main():
     )
 
     data = []
-    with open(local_path, "r") as f:
+
+    with open(local_save_path, "r") as f:
         data = f.readlines()
 
     output_dir = "data/"

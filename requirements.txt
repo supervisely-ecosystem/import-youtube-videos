@@ -8,4 +8,4 @@ python-dotenv
 
 supervisely
 
-yt-dlp
+pytube
