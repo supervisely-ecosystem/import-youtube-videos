@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from dotenv import load_dotenv
 import os
+import re
 from pytube import YouTube
 import supervisely as sly
 
@@ -15,11 +16,26 @@ workspace_id = sly.env.workspace_id()
 downloaded_video = None
 download_progress = None
 
+# def get_youtube_id(link):
+
+#     assert link.startswith("https://www.youtube.com/"), "Invalid YouTube link. Please use desktop format of url starting with 'https://www.youtube.com/...'"
+#     try:
+#         # Extract the video ID from the link using regular expressions
+#         video_id = re.search(r'(?<=v=)[^&#]+', link).group(0)
+#     except AttributeError:
+#         # If the regular expression doesn't match, raise an exception with a custom error message
+#         raise ValueError("Invalid YouTube link.")
+
+#     print(f'Youtube ID is {video_id}')
+#     return video_id
+
 
 def download(url, output_dir="data/"):
+    global downloaded_video
     yt = YouTube(str(url))
     stream = yt.streams.get_highest_resolution()
-    stream.download(output_path="")
+    # video_path = output_dir + f"/{get_youtube_id}."
+    downloaded_video = stream.download(output_path=output_dir)
 
 
 def main():
@@ -35,9 +51,7 @@ def main():
         type=sly.ProjectType.VIDEOS,
     )
 
-    dataset = api.dataset.create(
-        project.id, "YouTube Videos", change_name_if_conflict=True
-    )
+    dataset = api.dataset.create(project.id, "YouTube Videos", change_name_if_conflict=True)
 
     data = []
 
@@ -55,6 +69,7 @@ def main():
                 print(f"Start {normalized_url}")
                 download_progress = None
                 download(normalized_url, output_dir)
+                # ln -s /Users/germanvorozko/work-apps/supervisely/supervisely ./supervisely
                 api.video.upload_path(
                     dataset_id=dataset.id,
                     name=sly.fs.get_file_name_with_ext(downloaded_video),
@@ -67,7 +82,7 @@ def main():
                 sly.logger.warn(repr(e))
         progress.iter_done_report()
 
-    sly.fs.silent_remove(local_path)
+    sly.fs.silent_remove(local_save_path)
 
     print("Done")
     if sly.is_production():
