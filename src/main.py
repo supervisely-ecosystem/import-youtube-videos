@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
 from dotenv import load_dotenv
 import os
-import youtube_dl
+import yt-dlp
 import supervisely as sly
 
 # load ENV variables for debug
 # has no effect in production
-load_dotenv("local.env")
-load_dotenv(os.path.expanduser("~/supervisely.env"))
+if sly.is_development():
+    load_dotenv("local.env")
+    load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 api = sly.Api.from_env()
 team_id = sly.env.team_id()
@@ -15,7 +16,6 @@ workspace_id = sly.env.workspace_id()
 
 downloaded_video = None
 download_progress = None
-
 
 def my_hook(d):
     global downloaded_video
@@ -32,7 +32,6 @@ def my_hook(d):
         downloaded_video = d["filename"]
         download_progress.set_current_value(d["total_bytes"])
 
-
 def download(url, output_dir="data/"):
     ydl_opts = {
         "format": "best",
@@ -43,7 +42,7 @@ def download(url, output_dir="data/"):
         "quiet": True,
     }
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    with yt-dlp as ydl:
         ydl.download([url])
 
 
