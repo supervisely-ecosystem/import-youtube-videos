@@ -1,2 +1,2 @@
 supervisely==6.69.73
-pytube==12.1.2
+yt-dlp
