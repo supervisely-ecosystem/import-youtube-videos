@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 from dotenv import load_dotenv
 import os
-import re
-from pytube import YouTube
 import supervisely as sly
+import yt_dlp
 
 if sly.is_development():
     load_dotenv("local.env")
@@ -26,16 +25,32 @@ download_progress = None
 #         # If the regular expression doesn't match, raise an exception with a custom error message
 #         raise ValueError("Invalid YouTube link.")
 
-#     print(f'Youtube ID is {video_id}')
-#     return video_id
+    if d["status"] == "downloading":
+        if download_progress is None:
+            download_progress = sly.Progress(
+                f"Downloading {d['filename']}", total_cnt=d["total_bytes"], is_size=True
+            )
+
+    download_progress.set_current_value(d["downloaded_bytes"], report=True)
+
+    if d["status"] == "finished":
+        print("Downloaded!")
+        downloaded_video = d["filename"]
+        download_progress.set_current_value(d["total_bytes"])
 
 
 def download(url, output_dir="data/"):
-    global downloaded_video
-    yt = YouTube(str(url))
-    stream = yt.streams.get_highest_resolution()
-    # video_path = output_dir + f"/{get_youtube_id}."
-    downloaded_video = stream.download(output_path=output_dir)
+    ydl_opts = {
+        "format": "best",
+        "continue": True,
+        "outtmpl": output_dir + "%(uploader)s - %(title)s.%(ext)s",
+        "progress_hooks": [my_hook],
+        # "no-progress": True,
+        "quiet": True,
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
 
 def main():
@@ -60,7 +75,6 @@ def main():
 
     output_dir = "data/"
     sly.fs.mkdir(output_dir)
-
     progress = sly.Progress("Processing", len(data))
     for url in data:
         normalized_url = url.strip()
@@ -92,6 +106,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# youtube-dl -f best -a videos_list.txt

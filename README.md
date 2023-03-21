@@ -5,7 +5,8 @@
 
 <p align="center">
   <a href="#Overview">Overview</a> •
-  <a href="#How-To-Run">How To Run</a>
+  <a href="#How-To-Run">How To Run</a> •
+  <a href="#Acknowledgement">Acknowledgement</a>
 </p>
 
 [![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-videos)
@@ -47,3 +48,6 @@ https://www.youtube.com/watch?v=M69gZrLm9oc
 As a result of running this app, project with all of your uploaded videos will appear in your workspace.
 
 <img src="https://user-images.githubusercontent.com/115161827/203787133-aaea00c0-7246-40b9-9023-f4131e753e26.gif"  style='padding-top: 10px'>
+
+# Acknowledgement
+This app is based on the fork of the original `youtube-dl`([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/ytdl-org/youtube-dl?style=social) library called `yt-dlp`. Check it out on [github](https://github.com/yt-dlp/yt-dlp). ![GitHub Org's stars](https://img.shields.io/github/stars/yt-dlp/yt-dlp?style=social)
