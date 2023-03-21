@@ -6,7 +6,7 @@
 <p align="center">
   <a href="#Overview">Overview</a> •
   <a href="#How-To-Run">How To Run</a> •
-  <a href="#Acknowledge">Acknowledgement</a> 
+  <a href="#Acknowledgement">Acknowledgement</a> 
 </p>
 
 [![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/import-youtube-videos)
@@ -51,4 +51,4 @@ As a result of running this app, project with all of your uploaded videos will a
 
 
 # Acknowledgement
-This app is based on the great work `youtube-dl` ([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/ytdl-org/youtube-dl?style=social)
+This app is based on the fork of the original `youtube-dl`([github](https://github.com/ytdl-org/youtube-dl)). ![GitHub Org's stars](https://img.shields.io/github/stars/ytdl-org/youtube-dl?style=social) library called `yt-dlp`. Check it out on [github](https://github.com/yt-dlp/yt-dlp). ![GitHub Org's stars](https://img.shields.io/github/stars/yt-dlp/yt-dlp?style=social)
