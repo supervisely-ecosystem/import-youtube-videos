@@ -3,6 +3,7 @@
   "headless": true,
   "name": "Import YouTube videos",
   "description": "Import videos by urls provided in text file",
+  "docker_image": "supervisely/import-youtube-videos:1.0.0",
   "categories": [
     "import",
     "videos"
