@@ -7,6 +7,7 @@
     "import",
     "videos"
   ],
+  "docker_image": "supervisely/import-export:0.0.5",
   "context_menu": {
     "context_category": "Import",
     "target": ["files_file"]
