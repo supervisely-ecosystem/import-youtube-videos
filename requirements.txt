@@ -1,2 +1,2 @@
 supervisely==6.72.152
-yt-dlp
+yt-dlp==2023.10.13
