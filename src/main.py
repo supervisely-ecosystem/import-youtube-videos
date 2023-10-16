@@ -45,6 +45,7 @@ def download(url, output_dir="data/"):
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.cache.remove()
         ydl.download([url])
 
 
