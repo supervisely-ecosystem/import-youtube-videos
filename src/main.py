@@ -4,6 +4,8 @@ import os
 import supervisely as sly
 import yt_dlp
 
+from supervisely import handle_exceptions
+
 if sly.is_development():
     load_dotenv("local.env")
     load_dotenv(os.path.expanduser("~/supervisely.env"))
@@ -48,6 +50,7 @@ def download(url, output_dir="data/"):
         ydl.download([url])
 
 
+@handle_exceptions
 def main():
     global download_progress
 
@@ -98,4 +101,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sly.main_wrapper("main", main)
