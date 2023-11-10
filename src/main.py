@@ -58,10 +58,11 @@ def main():
     local_path = os.path.join("src", sly.fs.get_file_name_with_ext(remote_path))
     api.file.download(team_id, remote_path, local_path)
 
-    project = api.project.get_or_create(
+    project = api.project.create(
         workspace_id=workspace_id,
         name=sly.fs.get_file_name(remote_path),
         type=sly.ProjectType.VIDEOS,
+        change_name_if_conflict=True
     )
 
     dataset = api.dataset.create(project.id, "YouTube Videos", change_name_if_conflict=True)
@@ -69,7 +70,7 @@ def main():
     data = []
     with open(local_path, "r") as f:
         data = f.readlines()
-
+    videos_cnt = 0
     output_dir = "data/"
     sly.fs.mkdir(output_dir)
     progress = sly.Progress("Processing", len(data))
@@ -88,12 +89,15 @@ def main():
                 )
                 sly.fs.silent_remove(downloaded_video)
                 print(f"Finish {normalized_url}")
+                videos_cnt += 1
             except Exception as e:
                 sly.logger.warn(repr(e))
         progress.iter_done_report()
 
     sly.fs.silent_remove(local_path)
 
+    if videos_cnt == 0:
+        raise RuntimeError("No videos were uploaded.")
     print("Done")
     if sly.is_production():
         task_id = sly.env.task_id()
