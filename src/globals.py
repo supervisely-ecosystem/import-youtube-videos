@@ -44,7 +44,7 @@ opts = {
 }
 
 
-downloaded_video = None
-download_progress = None
+# downloaded_video = None
+# download_progress = None
 PROGRESS = None
 videos_uploaded = False
