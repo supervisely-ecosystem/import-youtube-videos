@@ -1,16 +1,11 @@
 from __future__ import unicode_literals
-from dotenv import load_dotenv
 import os
+import yt_dlp
 import supervisely as sly
-import youtube_dl
 import src.globals as g
 from typing import List
 
 from supervisely import handle_exceptions
-
-if sly.is_development():
-    load_dotenv("local.env")
-    load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 
 def get_urls() -> List[str]:
@@ -30,25 +25,32 @@ def get_urls() -> List[str]:
     return urls
 
 
-def download(url: str):
+def download_urls(urls):
     try:
-        with youtube_dl.YoutubeDL(g.download_options) as ydl:
-            ydl.download([url])
+        with yt_dlp.YoutubeDL(g.opts) as ydl:
+            ydl.download(urls)
     except Exception as e:
-        sly.logger.warn(f"An error occurred while downloading a video: {e}")
-
-
-def upload(dataset_id):
-    for video in os.listdir(g.output_dir):
-        g.api.video.upload_path(
-            dataset_id=dataset_id,
-            name=sly.fs.get_file_name_with_ext(video),
-            path=video,
-            item_progress=True,
+        sly.logger.error(
+            f"An error occurred while downloading a video.", extra={"exception message": str(e)}
         )
-        sly.fs.silent_remove(video)
-        g.videos_cnt += 1
-        g.PROGRESS.iter_done_report()
+        raise RuntimeError(f"An error occurred while downloading a video.")
+
+
+def upload_videos(dataset_id, names):
+    paths = [os.path.join(g.output_dir, name) for name in names]
+    try:
+        video_infos = g.api.video.upload_paths(
+            dataset_id=dataset_id,
+            names=names,
+            paths=paths,
+            progress_cb=g.PROGRESS.iters_done_report,
+        )
+        g.videos_uploaded = True
+    except Exception as e:
+        sly.logger.error("Error while uploading videos.", extra={"exception": str(e)})
+        raise RuntimeError("Error while uploading videos.")
+    finally:
+        (sly.fs.silent_remove(path) for path in paths)
 
 
 @handle_exceptions
@@ -61,14 +63,14 @@ def main():
     )
     dataset = g.api.dataset.create(project.id, "YouTube Videos", change_name_if_conflict=True)
 
-    urls = get_urls()
     sly.logger.info("Downloading videos...")
-    (download(url) for url in urls)
-    sly.logger.info(f"Successfully downloaded {len(urls)} videos, uploading...")
-    upload(dataset.id)
+    download_urls(get_urls())
+    sly.logger.info("Successfully downloaded videos, uploading...")
 
-    if g.videos_cnt == 0:
+    upload_videos(dataset.id, os.listdir(g.output_dir))
+    if not g.videos_uploaded:
         raise RuntimeError("No videos were uploaded.")
+    sly.logger.info("Finished uploading videos.")
 
     if sly.is_production():
         task_id = sly.env.task_id()
